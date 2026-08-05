@@ -1,0 +1,102 @@
+<section class="search-section">
+
+    <form method="GET" action="{% url 'business_list' %}">
+        <div class="search-box">
+
+            <!-- Search -->
+            <div class="search-item search-keyword">
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ keyword }}"
+                    placeholder="Search businesses, services or area..."
+                    class="form-control border-0 shadow-none">
+            </div>
+
+            <!-- Category -->
+            <div class="search-item">
+
+                <label>Category</label>
+
+                <select name="category" class="form-select border-0 shadow-none">
+
+                    <option value="">All Categories</option>
+
+                    {% for category in categories %}
+                        <option value="{{ category.slug }}" {% if category.slug == selected_category %} selected {% endif %}>
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <!-- Area -->
+            <div class="search-item">
+
+                <label>Area</label>
+
+                <select name="area" class="form-select border-0 shadow-none">
+
+                    <option value="">All Areas</option>
+
+                    {% for area in areas %}
+                        <option
+                            value="{{ area.slug }}"
+                            {% if area.slug == selected_area %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ area.name }}
+                        </option>
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <!-- Offer -->
+            <div class="search-item">
+
+                <label>Offers</label>
+
+                <select name="offer" class="form-select border-0 shadow-none">
+
+                    <option value="">All Offers</option>
+
+                    {% for value, label in offer_types %}
+                        <option
+                            value="{{ value }}"
+                            {% if value == selected_offer %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+
+                    <option
+                        value="ending_soon"
+                        {% if selected_offer == "ending_soon" %}
+                            selected
+                        {% endif %}
+                    >
+                        Ending Soon
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Button -->
+            <button class="btn btn-success search-btn">
+                Search
+            </button>
+
+        </div>
+    </form>
+
+</section>
