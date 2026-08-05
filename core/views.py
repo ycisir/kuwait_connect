@@ -11,10 +11,12 @@ def home(self):
 	categories = Category.objects.order_by("name")[:6]
 	offer_types = Offer.OFFER_TYPES
 	areas = Area.objects.order_by("name")
+	top_offers = Offer.objects.filter(is_active=True, expires_at__gte=timezone.now().date()).select_related("business").order_by("-id")[:3]
 	context = {
 		"categories": categories,
 		"offer_types": offer_types,
 		"areas": areas,
+		"top_offers": top_offers
 	}
 	return render(request, 'core/home.html', context)
 

@@ -1,0 +1,48 @@
+{% load static %}
+<section class="top-offers pb-5">
+
+    <div class="top-offers-box">
+
+        <div class="top-offers-left">
+
+            <div class="offer-icon">
+                <img src="{% static 'core/images/promotion.png' %}" alt="Today's Top Offers" width="50">
+            </div>
+
+            <div>
+                <h4>Today's Top Offers</h4>
+                <p>Great deals from local businesses.</p>
+            </div>
+
+        </div>
+
+        <a href="{% url 'business_list' %}?offer=discount"
+           class="view-all-link">
+            View All Offers →
+        </a>
+
+        <div class="top-offers-images">
+
+            {% for offer in top_offers %}
+
+            <a href="#" class="offer-card">
+
+                {% if offer.image %}
+                    <img src="{{ offer.image.url }}"
+                         alt="{{ offer.title }}"
+                         class="offer-thumbnail">
+                {% endif %}
+
+                <div class="offer-badge">
+                    {{ offer.title }}
+                </div>
+
+            </a>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>

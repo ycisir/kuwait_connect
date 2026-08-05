@@ -83,6 +83,7 @@ class Offer(models.Model):
 	title = models.CharField(max_length=255)
 	offer_type = models.CharField(max_length=20, choices=OFFER_TYPES, default=DISCOUNT)
 	expires_at = models.DateField(null=True, blank=True, help_text="Leave blank if the offer has no expiry date.")
+	image = models.ImageField(upload_to="offers/", blank=True, null=True)
 	is_active = models.BooleanField(default=True)
 
 	def __str__(self):

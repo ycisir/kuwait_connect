@@ -1,47 +1,11 @@
-# ==========================================
-# Python & Django Core
-# ==========================================
-# Byte-compiled / optimized / DLL files
+# Python-generated files
 __pycache__/
-*.py[cod]
-*$py.class
-
-# Django local settings & logs
-local_settings.py
-*.log
-
-# Django media and collected static files
-# (Keep static_src/assets tracked, but ignore generated/uploaded files)
-media/
-staticfiles/
-
-# ==========================================
-# Databases & Environments
-# ==========================================
-# Local SQLite database
-db.sqlite3
-*.sqlite3
-
-# Environment variables containing secrets/API keys
-.env
-.flaskenv
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
 
 # Virtual environments
-venv/
-.venv/
-env/
-ENV/
-env.bak/
-
-# ==========================================
-# IDEs, Editors & OS Specific
-# ==========================================
-# VS Code
-.vscode/
-
-# PyCharm / IntelliJ
-.idea/
-
-# Operating System files
-.DS_Store
-Thumbs.db
+.venv
+.env
