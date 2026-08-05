@@ -8,7 +8,7 @@ today = timezone.now().date()
 
 # Create your views here.
 def home(self):
-	categories = Category.objects.order_by("name")[:8]
+	categories = Category.objects.order_by("name")[:6]
 	offer_types = Offer.OFFER_TYPES
 	areas = Area.objects.order_by("name")
 	context = {
