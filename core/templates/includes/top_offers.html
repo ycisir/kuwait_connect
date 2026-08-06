@@ -25,7 +25,7 @@
 
             {% for offer in top_offers %}
 
-            <a href="#" class="offer-card">
+            <div class="offer-card" data-business="{{ offer.business.id }}">
 
                 {% if offer.image %}
                     <img src="{{ offer.image.url }}"
@@ -37,7 +37,7 @@
                     {{ offer.title }}
                 </div>
 
-            </a>
+            </div>
 
             {% endfor %}
 

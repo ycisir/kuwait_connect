@@ -1,0 +1,64 @@
+<div class="row">
+
+    <div class="col-md-6">
+
+        {% if business.cover_image %}
+            <img
+                src="{{ business.cover_image.url }}"
+                class="img-fluid rounded">
+        {% endif %}
+
+    </div>
+
+    <div class="col-md-6">
+
+        <h2>{{ business.name }}</h2>
+
+        <p>{{ business.description }}</p>
+
+        <hr>
+
+        <p>
+            <strong>Category:</strong>
+            {{ business.category.name }}
+        </p>
+
+        <p>
+            <strong>Area:</strong>
+            {{ business.area.name }}
+        </p>
+
+        {% if business.offers.exists %}
+        <h5>Offers</h5>
+
+        <ul>
+
+            {% if latest_offers %}
+
+                <h5>Latest Offers</h5>
+
+                <ul>
+
+                    {% for offer in latest_offers %}
+                        <li>{{ offer.title }}</li>
+                    {% endfor %}
+
+                </ul>
+
+            {% endif %}
+
+        </ul>
+        {% endif %}
+
+        <a
+            href="{{ business.whatsapp_url }}"
+            target="_blank"
+            class="btn btn-success">
+
+            Connect on WhatsApp
+
+        </a>
+
+    </div>
+
+</div>

@@ -40,3 +40,35 @@ $('.featured-carousel').owlCarousel({
 });
 
 $('.featured-carousel .owl-nav').appendTo('.featured-right');
+
+
+
+$('.featured-card').click(function(){
+
+    let id = $(this).data('business');
+
+    $.get('/business/' + id + '/modal/', function(response){
+
+        $('#modalContent').html(response.html);
+
+        $("#businessModal").modal("show");
+
+    });
+
+});
+
+$(document).on("click", ".offer-card", function (e) {
+
+    e.preventDefault();
+
+    let id = $(this).data("business");
+
+    $.get("/business/" + id + "/modal/", function (response) {
+
+        $("#modalContent").html(response.html);
+
+        $("#businessModal").modal("show");
+
+    });
+
+});

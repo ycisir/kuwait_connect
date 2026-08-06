@@ -5,6 +5,9 @@ from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Q
 today = timezone.now().date()
+from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 # Create your views here.
 def home(self):
@@ -82,3 +85,17 @@ def business_list(request):
 	}
 
 	return render(request, "core/businesses_list.html", context)
+
+
+
+def business_modal(request, pk):
+    business = get_object_or_404(Business, pk=pk)
+    latest_offers = business.offers.filter(is_active=True, expires_at__gte=timezone.now().date()).order_by("-id")[:3]
+
+    html = render_to_string(
+        "includes/business_modal.html",
+        {"business": business, "latest_offers": latest_offers},
+        request=request
+    )
+
+    return JsonResponse({"html": html})
