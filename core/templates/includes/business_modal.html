@@ -1,63 +1,156 @@
-<div class="row">
+{% load static %}
 
-    <div class="col-md-6">
+<div class="kc-business-modal">
 
-        {% if business.cover_image %}
-            <img
-                src="{{ business.cover_image.url }}"
-                class="img-fluid rounded">
-        {% endif %}
+    <div class="row g-4">
 
-    </div>
+        <!-- LEFT SIDE -->
+        <div class="col-lg-5">
 
-    <div class="col-md-6">
+            <div class="modal-gallery">
 
-        <h2>{{ business.name }}</h2>
+                {% if business.cover_image %}
+                    <img
+                        src="{{ business.cover_image.url }}"
+                        class="main-image"
+                        id="mainBusinessImage">
+                {% endif %}
 
-        <p>{{ business.description }}</p>
+            </div>
 
-        <hr>
+        </div>
 
-        <p>
-            <strong>Category:</strong>
-            {{ business.category.name }}
-        </p>
+        <!-- RIGHT SIDE -->
+        <div class="col-lg-7">
 
-        <p>
-            <strong>Area:</strong>
-            {{ business.area.name }}
-        </p>
+            {% if business.featured %}
+                <span class="featured-label">
+                    Featured
+                </span>
+            {% endif %}
 
-        {% if business.offers.exists %}
-        <h5>Offers</h5>
+            <div class="business-header">
 
-        <ul>
+                {% if business.logo %}
+                    <img
+                        src="{{ business.logo.url }}"
+                        class="business-logo">
+                {% endif %}
 
-            {% if latest_offers %}
+                <div>
 
-                <h5>Latest Offers</h5>
+                    <h2>{{ business.name }}</h2>
 
-                <ul>
+                    <p>
+                        {{ business.category.name }}
+                        •
+                        {{ business.area.name }}
+                    </p>
 
-                    {% for offer in latest_offers %}
-                        <li>{{ offer.title }}</li>
-                    {% endfor %}
+                </div>
 
-                </ul>
+            </div>
+
+            <div class="offer-section">
+
+                {% if latest_offers %}
+
+                    {% with latest_offers|first as offer %}
+
+                        <div class="modal-offer-card">
+
+                            <h5>{{ offer.title }}</h5>
+
+                            {% if offer.expires_at %}
+                                <small>
+                                    Valid till {{ offer.expires_at }}
+                                </small>
+                            {% endif %}
+
+                        </div>
+
+                    {% endwith %}
+
+                {% endif %}
+
+            </div>
+
+            <div class="business-description">
+
+                {{ business.description }}
+
+            </div>
+
+            <div class="business-actions">
+
+                <a
+                    href="{{ business.whatsapp_url }}"
+                    target="_blank"
+                    class="btn btn-success">
+
+                    WhatsApp
+
+                </a>
+
+                {% if business.phone %}
+                <a
+                    href="tel:{{ business.phone }}"
+                    class="btn btn-outline-dark">
+
+                    Call
+
+                </a>
+                {% endif %}
+
+            </div>
+
+            {% if business.website %}
+            <a
+                href="{{ business.website }}"
+                target="_blank"
+                class="btn btn-outline-secondary w-100 mt-3">
+
+                Visit Website
+
+            </a>
+            {% endif %}
+
+            {% if business.google_maps_url %}
+
+            <a
+                href="{{ business.google_maps_url }}"
+                target="_blank"
+                class="btn btn-outline-primary w-100 mt-3">
+
+                Get Directions
+
+            </a>
 
             {% endif %}
 
-        </ul>
-        {% endif %}
+            <div class="social-links mt-4">
 
-        <a
-            href="{{ business.whatsapp_url }}"
-            target="_blank"
-            class="btn btn-success">
+                {% if business.instagram_url %}
+                    <a href="{{ business.instagram_url }}" target="_blank">
+                        <img src="{% static 'core/images/instagram.png' %}">
+                    </a>
+                {% endif %}
 
-            Connect on WhatsApp
+                {% if business.facebook_url %}
+                    <a href="{{ business.facebook_url }}" target="_blank">
+                        <img src="{% static 'core/images/facebook.png' %}">
+                    </a>
+                {% endif %}
 
-        </a>
+                {% if business.tiktok_url %}
+                    <a href="{{ business.tiktok_url }}" target="_blank">
+                        <img src="{% static 'core/images/tiktok.png' %}">
+                    </a>
+                {% endif %}
+
+            </div>
+
+        </div>
 
     </div>
 
