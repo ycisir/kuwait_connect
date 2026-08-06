@@ -1,0 +1,103 @@
+{% load static %}
+<section class="pb-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div class="featured-top">
+
+            <h5 class="fw-bold mb-0">Featured Businesses</h3>
+
+            <div class="featured-right">
+
+                <a href="{% url 'business_list' %}?featured=1"
+                   class="view-all-link">
+                    View All
+                </a>
+
+                <!-- Owl nav will be moved here -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="owl-carousel featured-carousel">
+
+        {% for business in featured_businesses %}
+
+        <div class="item">
+             <div class="featured-card" data-bs-toggle="modal" data-bs-target="#businessModal" data-business="{{ business.id }}">
+
+                <div class="featured-image">
+
+                    {% if business.cover_image %}
+                        <img src="{{ business.cover_image.url }}">
+                    {% endif %}
+
+                    <span class="featured-badge">
+                        FEATURED
+                    </span>
+
+                    <div class="logo-wrapper">
+
+                        {% if business.logo %}
+                            <img src="{{ business.logo.url }}">
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+                <div class="featured-body">
+
+
+                    <h5>{{ business.name }}</h5>
+
+                    <p>{{ business.area.name }}</p>
+
+                    <div class="social-links">
+
+                        {% if business.instagram_url %}
+                            <a href="{{ business.instagram_url }}" target="_blank">
+                                <img src="{% static 'core/images/instagram.png' %}" alt="Instagram">
+                            </a>
+                        {% endif %}
+
+                        {% if business.facebook_url %}
+                            <a href="{{ business.facebook_url }}" target="_blank">
+                                <img src="{% static 'core/images/facebook.png' %}" alt="Facebook">
+                            </a>
+                        {% endif %}
+
+                        {% if business.tiktok_url %}
+                            <a href="{{ business.tiktok_url }}" target="_blank">
+                                <img src="{% static 'core/images/tiktok.png' %}" alt="TikTok">
+                            </a>
+                        {% endif %}
+
+                    </div>
+
+                    <a
+                        href="{{ business.whatsapp_url }}"
+                        target="_blank"
+                        class="btn btn-success w-100">
+
+                        <i class="bi bi-whatsapp"></i>
+
+                        Connect on WhatsApp
+
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+        
+
+        {% endfor %}
+
+    </div>
+
+</section>

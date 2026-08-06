@@ -48,6 +48,8 @@ class Business(models.Model):
 	facebook_url = models.URLField(blank=True)
 	tiktok_url = models.URLField(blank=True)
 	google_maps_url = models.URLField(blank=True)
+	cover_image = models.ImageField(upload_to="businesses/covers/", blank=True, null=True)
+	logo = models.ImageField(upload_to="businesses/logos/", blank=True, null=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 

@@ -12,11 +12,13 @@ def home(self):
 	offer_types = Offer.OFFER_TYPES
 	areas = Area.objects.order_by("name")
 	top_offers = Offer.objects.filter(is_active=True, expires_at__gte=timezone.now().date()).select_related("business").order_by("-id")[:3]
+	featured_businesses = Business.objects.filter(featured=True).select_related("area")
 	context = {
 		"categories": categories,
 		"offer_types": offer_types,
 		"areas": areas,
-		"top_offers": top_offers
+		"top_offers": top_offers,
+		"featured_businesses": featured_businesses
 	}
 	return render(request, 'core/home.html', context)
 
@@ -29,6 +31,7 @@ def business_list(request):
 	category = request.GET.get("category")
 	area = request.GET.get("area")
 	offer = request.GET.get("offer")
+	featured = request.GET.get("featured")
 
 	if keyword:
 	    businesses = businesses.filter(Q(name__icontains=keyword) | Q(description__icontains=keyword))
@@ -38,6 +41,9 @@ def business_list(request):
 
 	if area:
 	    businesses = businesses.filter(area__slug=area)
+
+	if featured:
+		businesses = businesses.filter(featured=True)
 
 	if offer:
 
