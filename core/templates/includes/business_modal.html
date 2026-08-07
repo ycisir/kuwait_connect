@@ -104,23 +104,12 @@
 
             </div>
 
-            {% if business.website %}
-            <a
-                href="{{ business.website }}"
-                target="_blank"
-                class="btn btn-outline-secondary w-100 mt-3">
-
-                Visit Website
-
-            </a>
-            {% endif %}
-
             {% if business.google_maps_url %}
 
             <a
                 href="{{ business.google_maps_url }}"
                 target="_blank"
-                class="btn btn-outline-primary w-100 mt-3">
+                class="btn btn-outline-secondary w-100">
 
                 Get Directions
 

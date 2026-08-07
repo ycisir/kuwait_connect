@@ -37,7 +37,7 @@ def business_list(request):
 	featured = request.GET.get("featured")
 
 	if keyword:
-	    businesses = businesses.filter(Q(name__icontains=keyword) | Q(description__icontains=keyword))
+	    businesses = businesses.filter(Q(name__icontains=keyword) | Q(description__icontains=keyword) | Q(search_keywords__icontains=keyword))
 
 	if category:
 	    businesses = businesses.filter(category__slug=category)
