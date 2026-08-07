@@ -3,7 +3,7 @@ from django.http import request
 from core.models import Category, Area, Offer, Business
 from datetime import timedelta
 from django.utils import timezone
-from django.db.models import Q
+from django.db.models import Q, Count
 today = timezone.now().date()
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
@@ -16,12 +16,14 @@ def home(self):
 	areas = Area.objects.order_by("name")
 	top_offers = Offer.objects.filter(is_active=True, expires_at__gte=timezone.now().date()).select_related("business").order_by("-id")[:3]
 	featured_businesses = Business.objects.filter(featured=True).select_related("area")
+	business_areas = Area.objects.annotate(business_count=Count("businesses")).filter(business_count__gt=1).order_by("-business_count")[:5]
 	context = {
 		"categories": categories,
 		"offer_types": offer_types,
 		"areas": areas,
 		"top_offers": top_offers,
-		"featured_businesses": featured_businesses
+		"featured_businesses": featured_businesses,
+		"business_areas": business_areas
 	}
 	return render(request, 'core/home.html', context)
 

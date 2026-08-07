@@ -1,0 +1,44 @@
+<section class="pb-5">
+
+    <div class="section-header">
+
+        <h5 class="fw-bold mb-0">Browse by Area</h3>
+
+        <a href="{% url 'business_list' %}" class="view-all-link">
+            View All Areas
+        </a>
+
+    </div>
+
+    <div class="row g-4">
+
+        {% for area in business_areas %}
+
+        <div class="col-lg-2 col-md-4 col-6">
+
+            <a href="{% url 'business_list' %}?area={{ area.slug }}"
+               class="area-card">
+
+                {% if area.image %}
+                    <img src="{{ area.image.url }}">
+                {% endif %}
+
+                <div class="area-body">
+
+                    <h5>{{ area.name }}</h5>
+
+                    <small>
+                        {{ area.business_count }} Businesses
+                    </small>
+
+                </div>
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>

@@ -6,6 +6,7 @@ from urllib.parse import quote
 class Area(models.Model):
 	name = models.CharField(max_length=255)
 	slug = models.SlugField(unique=True, blank=True)
+	image = models.ImageField(upload_to="areas/")
 
 	def save(self, *args, **kwargs):
 		if not self.slug:
