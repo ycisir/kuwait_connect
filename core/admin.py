@@ -8,8 +8,10 @@ class BusinessAdmin(admin.ModelAdmin):
         "name",
         "category",
         "area",
+        "featured"
     )
     list_filter = (
+        "featured",
         "category",
         "area",
     )

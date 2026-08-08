@@ -3,9 +3,10 @@
 {% block title %} {{ page_title }} {% endblock title %}
 {% block content %}
 
-<div class="py-5">
+<div>
 
-    <h2 class="mb-4">{{ page_title }}</h2>
+    {% include 'includes/category.html' %}
+    {% include 'includes/business_list_filter.html' %}
 
     {% for business in businesses %}
 

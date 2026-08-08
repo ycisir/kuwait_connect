@@ -1,0 +1,113 @@
+<div class="listing-filters">
+
+
+    <!-- Sort -->
+    <form method="GET" action="{% url 'business_list' %}">
+
+        {% if keyword %}
+            <input type="hidden" name="q" value="{{ keyword }}">
+        {% endif %}
+
+        {% if selected_category %}
+            <input type="hidden" name="category" value="{{ selected_category }}">
+        {% endif %}
+
+        {% if selected_area %}
+            <input type="hidden" name="area" value="{{ selected_area.slug }}">
+        {% endif %}
+
+        {% if selected_offer %}
+            <input type="hidden" name="offer" value="{{ selected_offer }}">
+        {% endif %}
+
+        {% if featured %}
+            <input type="hidden" name="featured" value="{{ featured }}">
+        {% endif %}
+
+        <select
+            name="sort"
+            class="listing-filter-select"
+            onchange="this.form.submit()"
+        >
+            <option value="popular"
+                {% if selected_sort == "popular" %}selected{% endif %}>
+                Sort by: Popular
+            </option>
+
+            <option value="name"
+                {% if selected_sort == "name" %}selected{% endif %}>
+                Sort by: Name
+            </option>
+        </select>
+
+    </form>
+
+
+    <!-- Offers -->
+    <form method="GET" action="{% url 'business_list' %}">
+
+        {% if keyword %}
+            <input type="hidden" name="q" value="{{ keyword }}">
+        {% endif %}
+
+        {% if selected_category %}
+            <input type="hidden" name="category" value="{{ selected_category }}">
+        {% endif %}
+
+        {% if selected_area %}
+            <input type="hidden" name="area" value="{{ selected_area.slug }}">
+        {% endif %}
+
+        {% if featured %}
+            <input type="hidden" name="featured" value="{{ featured }}">
+        {% endif %}
+
+        {% if selected_sort %}
+            <input type="hidden" name="sort" value="{{ selected_sort }}">
+        {% endif %}
+
+        <select
+            name="offer"
+            class="listing-filter-select"
+            onchange="this.form.submit()"
+        >
+
+            <option value="">Offers</option>
+
+            {% for value, label in offer_types %}
+                <option
+                    value="{{ value }}"
+                    {% if selected_offer == value %}selected{% endif %}
+                >
+                    {{ label }}
+                </option>
+            {% endfor %}
+
+            <option
+                value="ending_soon"
+                {% if selected_offer == "ending_soon" %}selected{% endif %}
+            >
+                Ending Soon
+            </option>
+
+        </select>
+
+    </form>
+
+    <a
+        href="{% url 'business_list' %}"
+        class="text-decoration-none"
+    >
+        <i class="bi bi-arrow-counterclockwise"></i>
+        Reset
+    </a>
+
+
+
+
+    <!-- Results -->
+    <div class="listing-result-count">
+        {{ business_count }} Results
+    </div>
+
+</div>

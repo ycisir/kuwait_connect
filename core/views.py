@@ -30,63 +30,194 @@ def home(self):
 
 
 def business_list(request):
-	businesses = Business.objects.select_related("category", "area").prefetch_related("offers")
 
-	keyword = request.GET.get("q")
-	category = request.GET.get("category")
-	area = request.GET.get("area")
-	offer = request.GET.get("offer")
-	featured = request.GET.get("featured")
+    businesses = (
+        Business.objects
+        .select_related("category", "area")
+        .prefetch_related("offers")
+    )
 
-	if keyword:
-	    businesses = businesses.filter(Q(name__icontains=keyword) | Q(description__icontains=keyword) | Q(search_keywords__icontains=keyword))
+    keyword = request.GET.get("q")
+    category = request.GET.get("category")
+    area = request.GET.get("area")
+    offer = request.GET.get("offer")
+    featured = request.GET.get("featured")
+    sort = request.GET.get("sort", "popular")
 
-	if category:
-	    businesses = businesses.filter(category__slug=category)
+    # Sort
+    if sort == "name":
+    	businesses = businesses.order_by("name")
+    else:
+    	businesses = businesses.order_by("-featured", "-id")
 
-	if area:
-	    businesses = businesses.filter(area__slug=area)
 
-	if featured:
-		businesses = businesses.filter(featured=True)
+    # --------------------------------
+    # AREA
+    # --------------------------------
 
-	if offer:
+    selected_area = None
 
-	    if offer == "ending_soon":
+    if area:
+        selected_area = get_object_or_404(
+            Area,
+            slug=area
+        )
 
-	        today = timezone.now().date()
+        businesses = businesses.filter(
+            area=selected_area
+        )
 
-	        businesses = businesses.filter(
-	            offers__expires_at__gte=today,
-	            offers__expires_at__lte=today + timedelta(days=7),
-	            offers__is_active=True,
-	        )
 
-	    else:
+    # --------------------------------
+    # KEYWORD
+    # --------------------------------
 
-	        businesses = businesses.filter(
-	            offers__offer_type=offer,
-	            offers__is_active=True,
-	        )
+    if keyword:
+        businesses = businesses.filter(Q(name__icontains=keyword) | Q(description__icontains=keyword) | Q(search_keywords__icontains=keyword))
 
-	businesses = businesses.distinct()
 
-	context = {
-	    "businesses": businesses,
-	    "page_title": "Businesses",
+    # --------------------------------
+    # FEATURED
+    # --------------------------------
 
-	    "categories": Category.objects.order_by("name"),
-	    "areas": Area.objects.order_by("name"),
-	    "offer_types": Offer.OFFER_TYPES,
+    if featured:
+        businesses = businesses.filter(
+            featured=True
+        )
 
-	    # preserve selected values
-	    "keyword": keyword,
-	    "selected_category": category,
-	    "selected_area": area,
-	    "selected_offer": offer,
-	}
 
-	return render(request, "core/businesses_list.html", context)
+    # --------------------------------
+    # OFFER
+    # --------------------------------
+
+    if offer:
+
+        if offer == "ending_soon":
+
+            today = timezone.now().date()
+
+            businesses = businesses.filter(
+                offers__expires_at__gte=today,
+                offers__expires_at__lte=today + timedelta(days=7),
+                offers__is_active=True,
+            )
+
+        else:
+
+            businesses = businesses.filter(
+                offers__offer_type=offer,
+                offers__is_active=True,
+            )
+
+
+    # Remove duplicates
+    businesses = businesses.distinct()
+
+
+    # --------------------------------
+    # COUNT BEFORE CATEGORY
+    # --------------------------------
+
+    # This represents:
+    #
+    # Area + Keyword + Featured + Offer
+    #
+    # but NOT Category
+
+    all_business_count = businesses.count()
+
+
+    # --------------------------------
+    # CATEGORY COUNTS
+    # --------------------------------
+
+    categories = Category.objects.annotate(
+        business_count=Count(
+            "businesses",
+            filter=Q(
+                businesses__in=businesses
+            ),
+            distinct=True
+        )
+    ).order_by("name")
+
+
+    # --------------------------------
+    # APPLY SELECTED CATEGORY
+    # --------------------------------
+
+    if category:
+
+        businesses = businesses.filter(
+            category__slug=category
+        ).distinct()
+
+
+    # --------------------------------
+    # FINAL COUNT
+    # --------------------------------
+
+    business_count = businesses.count()
+
+
+    # --------------------------------
+    # PAGE TITLE
+    # --------------------------------
+
+    if selected_area:
+
+        page_title = f"Businesses in {selected_area.name}"
+
+    else:
+
+        page_title = "All Businesses"
+
+
+    # --------------------------------
+    # CONTEXT
+    # --------------------------------
+
+    context = {
+
+        "businesses": businesses,
+
+        "categories": categories,
+
+        "business_count": business_count,
+
+        "all_business_count": all_business_count,
+
+        "areas": Area.objects.order_by("name"),
+
+        "offer_types": Offer.OFFER_TYPES,
+
+
+        # Selected filters
+
+        "keyword": keyword,
+
+        "selected_category": category,
+
+        "selected_area": selected_area,
+
+        "selected_offer": offer,
+
+        "featured": featured,
+
+        "page_title": page_title,
+
+        "selected_sort": sort,
+
+        # List page needs counts
+        "show_category_counts": True,
+    }
+
+
+    return render(
+        request,
+        "core/businesses_list.html",
+        context
+    )
 
 
 
