@@ -907,7 +907,6 @@ body {
     margin: 20px 0;
 }
 
-.listing-filter-button,
 .listing-filter-select {
     height: 38px;
     background: #fff;
@@ -926,23 +925,9 @@ body {
     transition: all 0.15s ease;
 }
 
-.listing-filter-button {
-    cursor: pointer;
-}
-
-.listing-filter-button:hover,
 .listing-filter-select:hover {
     border-color: #d1d5db;
     background: #fafafa;
-}
-
-.listing-filter-button i {
-    font-size: 14px;
-}
-
-.listing-filter-button .bi-chevron-down {
-    font-size: 11px;
-    margin-left: 2px;
 }
 
 
@@ -988,6 +973,498 @@ body {
 .listing-reset-button:hover {
     color: #222;
     text-decoration: none;
+}
+
+/* =========================================
+   BUSINESS RESULTS
+========================================= */
+
+.business-results-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+
+/* =========================================
+   BUSINESS CARD
+========================================= */
+
+.business-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    background: #fff;
+    border: 1px solid #edf0f2;
+    border-radius: 12px;
+
+    padding: 12px;
+    margin-bottom: 12px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+    transition: box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.business-card:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+}
+
+
+/* =========================================
+   IMAGE
+========================================= */
+
+.business-card-image {
+    width: 160px;
+    height: 135px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 9px;
+    position: relative;
+}
+
+.business-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.business-image-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f3f4f6;
+    color: #9ca3af;
+    font-size: 32px;
+}
+
+.featured-badge {
+    position: absolute;
+
+    top: 10px;
+    left: 10px;
+
+    padding: 5px 9px;
+
+    background: #ffffff;
+    color: #222;
+
+    border-radius: 5px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    z-index: 2;
+}
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.business-card-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.business-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.business-name {
+    margin: 0 0 3px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #202124;
+}
+
+.business-category {
+    font-size: 13px;
+    color: #777;
+}
+
+
+.business-meta {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.rating {
+    color: #e6a817;
+    font-weight: 600;
+}
+
+.rating i {
+    font-size: 12px;
+}
+
+.reviews {
+    color: #777;
+}
+
+.open-now {
+    color: #269b67;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+
+.business-address {
+    margin-top: 8px;
+
+    font-size: 13px;
+    color: #888;
+}
+
+.business-address i {
+    margin-right: 4px;
+}
+
+
+/* =========================================
+   OFFER
+========================================= */
+
+.business-offer {
+    display: inline-block;
+
+    margin-top: 9px;
+    padding: 4px 8px;
+
+    border-radius: 5px;
+
+    background: #f1f7ff;
+    color: #3177b7;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   FAVORITE
+========================================= */
+
+.business-favorite {
+    width: 34px;
+    height: 34px;
+
+    border: 0;
+    background: #fff;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #666;
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.business-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    padding-right: 5px;
+}
+
+.business-action {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    font-size: 19px;
+}
+
+.business-action.phone {
+    border: 1px solid #e4e7eb;
+    color: #555;
+    background: #fff;
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.business-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    position: sticky;
+    top: 20px;
+}
+
+.sidebar-card {
+    background: #fff;
+
+    border: 1px solid #edf0f2;
+    border-radius: 12px;
+
+    padding: 16px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+
+/* =========================================
+   MAP
+========================================= */
+
+.map-card {
+    padding: 10px;
+}
+
+.map-placeholder {
+    height: 260px;
+
+    border-radius: 9px;
+
+    background: #eef5fb;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    color: #47749b;
+}
+
+.map-placeholder i {
+    font-size: 34px;
+    margin-bottom: 5px;
+}
+
+
+/* =========================================
+   TOP OFFERS
+========================================= */
+
+.sidebar-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+.sidebar-card-header h5 {
+    margin: 0;
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.sidebar-card-header a {
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+
+.top-offer {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #f0f0f0;
+
+    cursor: pointer;
+}
+
+.top-offer:last-child {
+    border-bottom: 0;
+}
+
+.top-offer-image {
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    border-radius: 7px;
+    overflow: hidden;
+
+    background: #f3f4f6;
+}
+
+.top-offer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.top-offer strong {
+    display: block;
+
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+
+.top-offer p {
+    margin: 0;
+
+    font-size: 12px;
+    color: #777;
+}
+
+
+/* =========================================
+   LIST YOUR BUSINESS
+========================================= */
+
+.list-business-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #eef5ff;
+}
+
+.list-business-card h5 {
+    margin-bottom: 8px;
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.list-business-card p {
+    margin-bottom: 14px;
+
+    font-size: 13px;
+    line-height: 1.5;
+    color: #667085;
+}
+
+.list-business-icon {
+    font-size: 55px;
+    color: #4e86d8;
+    opacity: 0.7;
+}
+
+.list-business-button {
+    display: inline-block;
+
+    padding: 9px 18px;
+
+    border-radius: 7px;
+
+    background: #12549a;
+    color: #fff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+/* =========================================
+   PAGINATION
+========================================= */
+
+.business-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    margin: 24px 0;
+}
+
+.pagination-button {
+    min-width: 36px;
+    height: 36px;
+
+    padding: 0 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e2e5e8;
+    border-radius: 7px;
+
+    background: #fff;
+
+    color: #555;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.pagination-button:hover {
+    background: #f7f8fa;
+}
+
+.pagination-button.active {
+    background: #12549a;
+    border-color: #12549a;
+    color: #fff;
+}
+
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.no-businesses {
+    text-align: center;
+
+    padding: 60px 20px;
+
+    background: #fff;
+
+    border: 1px solid #edf0f2;
+    border-radius: 12px;
+
+    color: #777;
+}
+
+.no-businesses i {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.no-businesses h5 {
+    color: #333;
 }
 
 
@@ -1175,4 +1652,85 @@ body {
     .offer-image-placeholder{
         min-width:170px;
     }
+}
+
+@media (max-width: 991px) {
+
+    .business-results-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .business-sidebar {
+        position: static;
+    }
+
+}
+
+@media (max-width: 576px) {
+
+    .business-card {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .business-card-image {
+        width: 105px;
+        height: 105px;
+    }
+
+    .business-name {
+        font-size: 15px;
+    }
+
+    .business-category,
+    .business-meta,
+    .business-address {
+        font-size: 11px;
+    }
+
+    .business-card-actions {
+        display: none;
+    }
+
+    .business-favorite {
+        width: 28px;
+        height: 28px;
+        font-size: 17px;
+    }
+
+    .business-sidebar {
+        margin-top: 5px;
+    }
+
+    .map-placeholder {
+        height: 200px;
+    }
+
+    .business-pagination {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 5px;
+    }
+
+}
+
+.business-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 8px;
+}
+
+.business-keyword {
+    display: inline-block;
+
+    padding: 3px 7px;
+
+    background: #f5f6f7;
+    border-radius: 5px;
+
+    color: #687078;
+
+    font-size: 11px;
+    line-height: 1.3;
 }

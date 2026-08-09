@@ -1,35 +1,35 @@
 {% extends "core/base.html" %}
 
 {% block title %} {{ page_title }} {% endblock title %}
+
 {% block content %}
 
-<div>
+
 
     {% include 'includes/category.html' %}
     {% include 'includes/business_list_filter.html' %}
 
-    {% for business in businesses %}
+    <div class="business-results-layout">
 
-        <div class="card mb-3">
-            <div class="card-body">
+        <!-- LEFT SIDE -->
+        {% include 'includes/business_list_main_left_content.html' %}
+        
+        <!-- RIGHT SIDE -->
+        {% include 'includes/business_list_main_right_content.html' %}
+        
 
-                <h5>{{ business.name }}</h5>
+    </div>
 
-                <p>
-                    {{ business.category }}
-                    •
-                    {{ business.area }}
-                </p>
-
-            </div>
-        </div>
-
-    {% empty %}
-
-        <p>No businesses found.</p>
-
-    {% endfor %}
-
-</div>
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+

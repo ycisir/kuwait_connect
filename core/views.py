@@ -8,6 +8,7 @@ today = timezone.now().date()
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 
 # Create your views here.
 def home(self):
@@ -139,7 +140,7 @@ def business_list(request):
             ),
             distinct=True
         )
-    ).order_by("name")
+    ).order_by("name")[:5]
 
 
     # --------------------------------
@@ -154,10 +155,85 @@ def business_list(request):
 
 
     # --------------------------------
+    # PAGINATION
+    # --------------------------------
+
+    paginator = Paginator(businesses, 5)
+
+    page_number = request.GET.get("page")
+
+    page_obj = paginator.get_page(page_number)
+
+
+    # --------------------------------
+    # DISPLAY KEYWORDS
+    # --------------------------------
+
+    for business in page_obj:
+
+        if business.search_keywords:
+
+            business.display_keywords = [
+                keyword.strip()
+                for keyword in business.search_keywords.split(",")
+                if keyword.strip()
+            ][:3]
+
+        else:
+
+            business.display_keywords = []
+
+    # --------------------------------
+    # ACTIVE OFFER
+    # --------------------------------
+
+    for business in page_obj:
+
+        today = timezone.now().date()
+
+        business.active_offer = next(
+            (
+                offer
+                for offer in business.offers.all()
+                if offer.is_active
+                and (
+                    not offer.expires_at
+                    or offer.expires_at >= today
+                )
+            ),
+            None
+        )
+
+
+    # --------------------------------
     # FINAL COUNT
     # --------------------------------
 
     business_count = businesses.count()
+
+    # --------------------------------
+    # TOP OFFERS
+    # --------------------------------
+    today = timezone.now().date()
+    top_offers = (
+        Offer.objects
+        .filter(
+            is_active=True,
+            expires_at__gte=today,
+        )
+        .select_related(
+            "business",
+            "business__area",
+        )
+    )
+
+    if selected_area:
+
+        top_offers = top_offers.filter(
+            business__area=selected_area
+        )
+
+    top_offers = top_offers[:3]
 
 
     # --------------------------------
@@ -174,12 +250,25 @@ def business_list(request):
 
 
     # --------------------------------
+    # PAGINATION QUERY STRING
+    # --------------------------------
+
+    query_params = request.GET.copy()
+
+    query_params.pop("page", None)
+
+    pagination_query = query_params.urlencode()
+
+
+    # --------------------------------
     # CONTEXT
     # --------------------------------
 
     context = {
 
-        "businesses": businesses,
+        "businesses": page_obj,
+
+        "page_obj": page_obj,
 
         "categories": categories,
 
@@ -191,6 +280,7 @@ def business_list(request):
 
         "offer_types": Offer.OFFER_TYPES,
 
+        "top_offers": top_offers,
 
         # Selected filters
 
@@ -207,6 +297,8 @@ def business_list(request):
         "page_title": page_title,
 
         "selected_sort": sort,
+
+        "pagination_query": pagination_query,
 
         # List page needs counts
         "show_category_counts": True,

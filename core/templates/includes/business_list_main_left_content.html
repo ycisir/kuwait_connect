@@ -1,0 +1,118 @@
+{% load static %}
+<div class="business-results">
+
+    {% for business in businesses %}
+
+        <div class="business-card" data-business="{{ business.id }}">
+
+            <!-- Image -->
+            <div class="business-card-image">
+
+                
+                <img
+                    src="{{ business.cover_image.url }}"
+                    alt="{{ business.name }}"
+                >
+
+                {% if business.featured %}
+
+                    <span class="featured-badge">
+                        Featured
+                    </span>
+
+                {% elif business.active_offer %} %}
+                    <span class="featured-badge">
+                        {{ business.active_offer.title }}
+                    </span>
+                {% endif %}
+
+
+            </div>
+
+
+            <!-- Content -->
+            <div class="business-card-content">
+
+                <div class="business-card-header">
+
+                    <div>
+
+                        <h5 class="business-name">
+                            {{ business.name }}
+                        </h5>
+
+                        
+
+                        {% if business.display_keywords %}
+
+                            <div class="business-keywords">
+
+                                {% for keyword in business.display_keywords %}
+
+                                    <span class="business-keyword">
+                                        {{ keyword }}
+                                    </span>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% endif %}
+
+                        <div class="business-category mt-1">
+                            {{ business.area }}
+                        </div>
+
+                        {% if business.active_offer %}
+
+                            <div class="business-offer">
+                                {{ business.active_offer.title }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Actions -->
+            <div class="business-card-actions">
+
+
+                <a
+                    href="https://wa.me/{{ business.whatsapp }}"
+                    class="business-action whatsapp"
+                    target="_blank"
+                >
+                    <img src="{% static 'core/images/whatsapp-icon.png' %}" width="45">
+                </a>
+
+                <a
+                    href="tel:{{ business.phone }}"
+                    class="business-action phone"
+                >
+                    <img src="{% static 'core/images/telephone.png' %}" width="27">
+                </a>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="no-businesses">
+            <h5>No businesses found</h5>
+            <p>Try changing your filters.</p>
+        </div>
+
+    {% endfor %}
+
+
+    <!-- PAGINATION -->
+    {% include 'includes/pagination.html' %}
+    
+
+</div>

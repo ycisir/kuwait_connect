@@ -1,0 +1,101 @@
+<aside class="business-sidebar">
+
+    <!-- Top Offers -->
+
+    <div class="sidebar-card">
+
+        <div class="sidebar-card-header">
+
+            <h5>
+                {% if selected_area %}
+                    Top Offers in {{ selected_area.name }}
+                {% else %}
+                    Top Offers
+                {% endif %}
+            </h5>
+
+            <a href="{% url 'business_list' %}">
+                View all
+            </a>
+
+        </div>
+
+
+        <div class="top-offers">
+
+            {% for offer in top_offers %}
+
+                <div class="top-offer" data-business="{{ offer.business.id }}">
+
+                    <div class="top-offer-image">
+
+                        {% if offer.image %}
+
+                            <img
+                                src="{{ offer.image.url }}"
+                                alt="{{ offer.business.name }}"
+                            >
+
+                        {% else %}
+
+                            <div class="top-offer-placeholder">
+                                Business
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="top-offer-content">
+
+                        <strong>
+                            {{ offer.business.name }}
+                        </strong>
+
+                        <p>
+                            {{ offer.title }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <p class="top-offers-empty">
+                    No active offers available.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- List Your Business -->
+
+    <div class="sidebar-card list-business-card">
+
+        <div>
+
+            <h5>
+                List Your Business
+            </h5>
+
+            <p>
+                Grow your business with Kuwait Connect.
+                Get more customers today!
+            </p>
+
+            <a href="https://wa.me/91987654321" target="_blank" class="list-business-button">
+                Add Your Business
+            </a>
+
+        </div>
+
+
+    </div>
+
+</aside>

@@ -1,5 +1,5 @@
 {% load static %}
-<section class="py-5">
+<section class="{% if show_category_counts %} pt-3 {% else %} py-5 {% endif %}">
     {% if not show_category_counts %}
     <div class="d-flex justify-content-between align-items-center mb-4">
 

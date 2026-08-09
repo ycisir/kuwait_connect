@@ -72,3 +72,35 @@ $(document).on("click", ".offer-card", function (e) {
     });
 
 });
+
+$(document).on("click", ".business-card", function (e) {
+
+    e.preventDefault();
+
+    let id = $(this).data("business");
+
+    $.get("/business/" + id + "/modal/", function (response) {
+
+        $("#modalContent").html(response.html);
+
+        $("#businessModal").modal("show");
+
+    });
+
+});
+
+$(document).on("click", ".top-offer", function (e) {
+
+    e.preventDefault();
+
+    let id = $(this).data("business");
+
+    $.get("/business/" + id + "/modal/", function (response) {
+
+        $("#modalContent").html(response.html);
+
+        $("#businessModal").modal("show");
+
+    });
+
+});
