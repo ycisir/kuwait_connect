@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import request
-from core.models import Category, Area, Offer, Business
+from core.models import Category, Area, Offer, Business, SearchLog
 from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Q, Count
@@ -39,6 +39,7 @@ def business_list(request):
     )
 
     keyword = request.GET.get("q")
+    search_submit = request.GET.get("search_submit")
     category = request.GET.get("category")
     area = request.GET.get("area")
     offer = request.GET.get("offer")
@@ -69,6 +70,14 @@ def business_list(request):
         )
 
 
+    selected_category = None
+
+    if category:
+        selected_category = get_object_or_404(
+            Category,
+            slug=category
+        )
+
     # --------------------------------
     # KEYWORD
     # --------------------------------
@@ -77,6 +86,20 @@ def business_list(request):
         businesses = businesses.filter(Q(name__icontains=keyword) | Q(description__icontains=keyword) | Q(search_keywords__icontains=keyword))
 
 
+
+    # --------------------------------
+    # SEARCH LOG
+    # --------------------------------
+
+    if search_submit and keyword and keyword.strip():
+        # print("CREATING SEARCH LOG:", keyword)
+
+        SearchLog.objects.create(
+            query=keyword.strip().lower(),
+            area=selected_area,
+            category=selected_category,
+            ip_address=request.META.get("REMOTE_ADDR"),
+        )
     # --------------------------------
     # FEATURED
     # --------------------------------
@@ -256,6 +279,7 @@ def business_list(request):
     query_params = request.GET.copy()
 
     query_params.pop("page", None)
+    query_params.pop("search_submit", None)
 
     pagination_query = query_params.urlencode()
 

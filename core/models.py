@@ -93,3 +93,19 @@ class Offer(models.Model):
 
 	def __str__(self):
 		return self.title
+
+
+class SearchLog(models.Model):
+
+    query = models.CharField(max_length=255)
+
+    # a area and category has many searchlogs
+    area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True, blank=True, related_name="search_logs")
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name="search_logs")
+
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+
+    searched_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.query
