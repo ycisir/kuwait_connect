@@ -1,0 +1,30 @@
+{% if popular_searches %}
+
+<section class="popular-searches pt-3">
+
+    <h5 class="popular-searches-title">
+        {% if selected_area %}
+            Popular Searches in {{ selected_area.name }}
+        {% else %}
+            Popular Searches
+        {% endif %}
+    </h5>
+
+    <div class="popular-searches-list">
+
+        {% for search in popular_searches %}
+
+            <a
+                href="{% url 'business_list' %}?q={{ search.query|urlencode }}{% if selected_area %}&area={{ selected_area.slug }}{% endif %}"
+                class="popular-search-pill"
+            >
+                {{ search.query|title }}
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endif %}

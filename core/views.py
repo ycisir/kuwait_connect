@@ -285,6 +285,28 @@ def business_list(request):
 
 
     # --------------------------------
+    # POPULAR SEARCHES
+    # --------------------------------
+
+    popular_search_logs = SearchLog.objects.all()
+
+    if selected_area:
+
+        popular_search_logs = popular_search_logs.filter(
+            area=selected_area
+        )
+
+    popular_searches = (
+        popular_search_logs
+        .values("query")
+        .annotate(search_count=Count("id"))
+        .order_by("-search_count")[:7]
+    )
+
+    print(popular_searches)
+
+
+    # --------------------------------
     # CONTEXT
     # --------------------------------
 
@@ -326,6 +348,8 @@ def business_list(request):
 
         # List page needs counts
         "show_category_counts": True,
+
+        "popular_searches": popular_searches,
     }
 
 
