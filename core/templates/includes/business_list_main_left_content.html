@@ -94,6 +94,7 @@
                 <a
                     href="tel:{{ business.phone }}"
                     class="business-action phone"
+                    onclick="event.stopPropagation();"
                 >
                     <img src="{% static 'core/images/telephone.png' %}" width="27">
                 </a>
